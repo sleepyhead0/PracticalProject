@@ -17,7 +17,7 @@ public class BookInfoDao implements BookInfoDaoInter {
 	public List<BookInfo> select() {
 		// TODO Auto-generated method stub
 		List<BookInfo> list = new ArrayList<BookInfo>();
-		String sql = "select * from 京东";
+		String sql = "select * from JD";
 		try {
 			PreparedStatement pstmt = baseDao.getConn().prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
@@ -40,10 +40,10 @@ public class BookInfoDao implements BookInfoDaoInter {
 	public int delete(int Rank) {
 		// TODO Auto-generated method stub
 		int result = -1;
-		String sql = "delete from 京东 where 排行= ?";
+		String sql = "delete from JD where JD.Rank=?";
 		try {
 			PreparedStatement pstmt = baseDao.getConn().prepareStatement(sql);
-			pstmt.setInt(1, );
+			pstmt.setInt(1, Rank);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -53,19 +53,20 @@ public class BookInfoDao implements BookInfoDaoInter {
 	}
 
 	@Override
-	public List<BookInfo> selectByBid(int Bid) {
+	public List<BookInfo> selectByRank(int Rank) {
 		// TODO Auto-generated method stub
 		List<BookInfo> list = new ArrayList<BookInfo>();
-		String sql = "select * from book where Bid=?";
+		String sql = "select * from JD where JD.Rank=? ";
 		try {
 			PreparedStatement pstmt = baseDao.getConn().prepareStatement(sql);
-			pstmt.setInt(1, Bid);
+			pstmt.setInt(1, Rank);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BookInfo bookInfo = new BookInfo();
-				bookInfo.setBid(rs.getInt("Bid"));
-				bookInfo.setBname(rs.getString("Bname"));
-				bookInfo.setAuthor(rs.getString("Author"));
+				bookInfo.setRank(rs.getInt("rank"));
+				bookInfo.setTitle(rs.getString("title"));
+				bookInfo.setPrice(rs.getString("price"));
+				bookInfo.setPress(rs.getString("press"));
 				list.add(bookInfo);
 			}
 		} catch (SQLException e) {
@@ -76,20 +77,21 @@ public class BookInfoDao implements BookInfoDaoInter {
 	}
 
 	@Override
-	public List<BookInfo> selectByBname(String Bname) {
+	public List<BookInfo> selectByTitle(String Title) {
 		// TODO Auto-generated method stub
 		List<BookInfo> list = new ArrayList<BookInfo>();
-		String sql = "select * from book where Bname like ?";
+		String sql = "select * from JD where Title like ?";
 		
 		try {
 			PreparedStatement pstmt = baseDao.getConn().prepareStatement(sql);
-			pstmt.setString(1, "%"+Bname+"%");
+			pstmt.setString(1, "%"+Title+"%");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BookInfo bookInfo = new BookInfo();
-				bookInfo.setBid(rs.getInt("Bid"));
-				bookInfo.setBname(rs.getString("Bname"));
-				bookInfo.setAuthor(rs.getString("Author"));
+				bookInfo.setRank(rs.getInt("rank"));
+				bookInfo.setTitle(rs.getString("title"));
+				bookInfo.setPrice(rs.getString("price"));
+				bookInfo.setPress(rs.getString("press"));
 				list.add(bookInfo);
 			}
 		} catch (SQLException e) {
